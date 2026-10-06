@@ -1,0 +1,36 @@
+Scaffold *
+│
+└── SafeArea *
+    │
+    └── Center *
+        │
+        └── ConstrainedBox *
+            │
+            └── Padding *
+                │
+                └── Column
+                    │
+                    ├── Image
+                    │
+                    ├── SizedBox
+                    │
+                    ├── Text
+                    │
+                    ├── SizedBox
+                    │
+                    ├── Text
+                    │
+                    ├── SizedBox
+                    │
+                    ├── TextField
+                    │
+                    ├── SizedBox
+                    │
+                    ├── SizedBox
+                    │   │
+                    │   └── ElevatedButton
+                    │
+                    ├── SizedBox
+                    │
+                    └── TextButton
+                    
