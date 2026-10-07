@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mr_market/app/localization/localization.dart';
 import 'package:mr_market/core/widgets/responsive/responsive_container.dart';
 import 'package:mr_market/features/auth/presentation/otp.dart';
+import 'package:mr_market/features/auth/presentation/username_signin.dart';
 import 'package:mr_market/features/auth/presentation/widgets/phone_number_field.dart';
 import 'package:mr_market/features/shared/base/base.dart';
 
@@ -62,140 +63,186 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Base(
-      child: Column(
-        children: [
-          const SizedBox(height: 35),
-          // Spacer(flex: 55,),
-          // Container(
-          //   width: 100,
-          //   height: 100,
-          //   decoration: BoxDecoration(
-          //     color: Color.fromARGB(200, 217, 217, 217),
-          //     borderRadius: BorderRadius.circular(36),
-          //   ),
-          // ),
-          Image.asset("assets/animations/Money.gif"),
-          const SizedBox(height: 20),
-          Text(
-            AuthFa.LOGIN_TITLE,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 5),
-          Text(
-            AuthFa.LOGIN_DESCRIPTION,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(fontSize: 15),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 35),
-          ResponsiveContainer(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // const SizedBox(height: 35),
+                  // Spacer(flex: 55,),
+                  // Container(
+                  //   width: 100,
+                  //   height: 100,
+                  //   decoration: BoxDecoration(
+                  //     color: Color.fromARGB(200, 217, 217, 217),
+                  //     borderRadius: BorderRadius.circular(36),
+                  //   ),
+                  // ),
+                  Image.asset("assets/animations/Money.gif"),
+                  const SizedBox(height: 20),
                   Text(
-                    AuthFa.PHONE_NUMBER_FIELD_LABEL,
-                    style: Theme.of(context).textTheme.bodySmall,
+                    AuthFa.LOGIN_TITLE,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      // fontWeight: FontWeight.w600,
+                      fontFamily: 'Peyda',
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                ],
-              ),
-            ),
-          ),
-          // ============================================
-          // Primary phone number field
-          // ============================================
-          ResponsiveContainer(
-            child: PhoneNumberField(
-              initialCountry: _selectedCountry,
-              controller: _phoneController,
-              onCountryChanged: (country) => {
-                setState(() => _selectedCountry = country),
-              },
-            ),
-          ),
-
-          ResponsiveContainer(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 50, bottom: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                  const SizedBox(height: 5),
                   Text(
-                    AuthFa.REMEBER_ME,
+                    AuthFa.LOGIN_DESCRIPTION,
                     style: Theme.of(
                       context,
-                    ).textTheme.bodySmall?.copyWith(fontSize: 15),
+                    ).textTheme.bodyMedium?.copyWith(fontSize: 15),
+                    textAlign: TextAlign.center,
                   ),
-                  GestureDetector(
-                    onLongPress: () {
-                      setState(() {
-                        _rememberMe = true;
-                      });
-                    },
-                    onLongPressEnd: (details) {
-                      setState(() {
-                        _rememberMe = false;
-                      });
-                    },
-                    child: CupertinoSwitch(
-                      value: _rememberMe,
-                      activeTrackColor: const Color(0xFF00C853),
-                      onChanged: (bool value) {
-                        setState(() => _rememberMe = value);
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          ResponsiveContainer(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 0,
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: CupertinoButton(
-                    padding: EdgeInsets.zero,
-                    borderRadius: BorderRadius.circular(25),
-                    color: _isPhoneValid
-                        ? const Color(0xFF0091FF)
-                        : CupertinoColors.systemGrey5,
-                    disabledColor: CupertinoColors.systemGrey5,
-                    onPressed: _isPhoneValid ? _handleContinue : null,
-                    child: Text(
-                      CommonFa.continueText,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: 18,
-                        color: _phoneController.text.isEmpty
-                            ? Colors.blueGrey
-                            : CupertinoColors.white,
+                  const SizedBox(height: 35),
+                  ResponsiveContainer(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            AuthFa.PHONE_NUMBER_FIELD_LABEL,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ),
-                CupertinoButton(
-                  padding: EdgeInsets.only(bottom: 6),
-                  child: Text(
-                    AuthFa.LOGIN_WITH_USERNAME,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodySmall?.copyWith(fontSize: 12),
+                  // ============================================
+                  // Primary phone number field
+                  // ============================================
+                  ResponsiveContainer(
+                    child: PhoneNumberField(
+                      initialCountry: _selectedCountry,
+                      controller: _phoneController,
+                      onCountryChanged: (country) => {
+                        setState(() => _selectedCountry = country),
+                      },
+                    ),
                   ),
-                  onPressed: () => {},
-                ),
-              ],
+
+                  ResponsiveContainer(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 50, bottom: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            AuthFa.REMEBER_ME,
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodySmall?.copyWith(fontSize: 15),
+                          ),
+                          GestureDetector(
+                            onLongPress: () {
+                              setState(() {
+                                _rememberMe = true;
+                              });
+                            },
+                            onLongPressEnd: (details) {
+                              setState(() {
+                                _rememberMe = false;
+                              });
+                            },
+                            child: CupertinoSwitch(
+                              value: _rememberMe,
+                              activeTrackColor: const Color(0xFF00C853),
+                              onChanged: (bool value) {
+                                setState(() => _rememberMe = value);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // const Color(0xFF12D18E)
+                  ResponsiveContainer(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: 0,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            boxShadow: [
+                              _isPhoneValid
+                                  ? BoxShadow(
+                                      color: const Color(
+                                        0xFF74CEC4,
+                                      ).withValues(alpha: 0.30),
+                                      blurRadius: 20,
+                                      spreadRadius: 2,
+                                      offset: const Offset(0, 6),
+                                    )
+                                  : BoxShadow(
+                                      color: const Color(
+                                        0xFF74CEC4,
+                                      ).withValues(alpha: 0.0),
+                                      blurRadius: 0,
+                                      spreadRadius: 0,
+                                      offset: const Offset(0, 0),
+                                    ),
+                            ],
+                          ),
+                          child: CupertinoButton(
+                            padding: EdgeInsets.zero,
+                            borderRadius: BorderRadius.circular(25),
+                            color: _isPhoneValid
+                                ? const Color(0xFF2F9F96)
+                                : CupertinoColors.systemGrey5,
+                            disabledColor: CupertinoColors.systemGrey5,
+                            onPressed: _isPhoneValid ? _handleContinue : null,
+                            child: Text(
+                              CommonFa.CONTINUE_TEXT,
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(
+                                    fontSize: 18,
+                                    color: _phoneController.text.isEmpty
+                                        ? Colors.blueGrey
+                                        : CupertinoColors.white,
+                                  ),
+                            ),
+                          ),
+                        ),
+
+                        CupertinoButton(
+                          padding: EdgeInsets.only(bottom: 0),
+                          child: Text(
+                            AuthFa.LOGIN_WITH_USERNAME,
+                            style: Theme.of(context).textTheme.bodySmall
+                                ?.copyWith(
+                                  fontSize: 12,
+                                  color: const Color(
+                                    0xFF687579,
+                                  ).withValues(alpha: 1),
+                                ),
+                          ),
+                          onPressed: () => {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (_) => UsernameSignin(),
+                              ),
+                            ),
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

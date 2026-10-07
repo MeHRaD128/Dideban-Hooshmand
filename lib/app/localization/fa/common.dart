@@ -24,7 +24,8 @@ class CommonFa {
   static const next = 'بعدی';
   static const previous = 'قبلی';
   static const back = 'بازگشت';
-  static const continueText = 'ادامه';
+  static const CONTINUE_TEXT = 'ادامه';
+  static const RETURN = 'برگشت به عقب';
 
   static const loading = 'در حال بارگذاری...';
   static const pleaseWait = 'لطفاً صبر کنید';

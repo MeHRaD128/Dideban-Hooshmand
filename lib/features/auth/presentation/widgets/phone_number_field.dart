@@ -65,7 +65,7 @@ class _PhoneNumberFieldState extends State<PhoneNumberField> {
           borderRadius: BorderRadius.circular(28),
           border: Border.all(
             color: _isFocused
-                ? const Color(0xFF2AABEE)
+                ? const Color(0xFF74CEC4)
                 : CupertinoColors.systemGrey5,
             width: _isFocused ? 1.5 : 1,
           ),

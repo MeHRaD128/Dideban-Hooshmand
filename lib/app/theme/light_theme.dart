@@ -8,9 +8,9 @@ class LightTheme {
       scaffoldBackgroundColor: const Color.fromARGB(255, 242, 242, 247),
 
       textTheme: const TextTheme(
-        bodyLarge: TextStyle(fontSize: 40),
-        bodyMedium: TextStyle(fontSize: 20),
-        bodySmall: TextStyle(fontSize: 10),
+        bodyLarge: TextStyle(fontSize: 40, fontFamily: 'Peyda'),
+        bodyMedium: TextStyle(fontSize: 20, fontFamily: 'Peyda'),
+        bodySmall: TextStyle(fontSize: 10, fontFamily: 'Peyda'),
       ),
     );
   }

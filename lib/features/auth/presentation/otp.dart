@@ -16,6 +16,7 @@ class OtpPage extends StatefulWidget {
 
 class _OtpPageState extends State<OtpPage> {
   late int length = 6;
+  final bool _isFocused = false;
   late final List<TextEditingController> _controller = List.generate(
     6,
     (_) => TextEditingController(),
@@ -44,59 +45,71 @@ class _OtpPageState extends State<OtpPage> {
   @override
   Widget build(BuildContext context) {
     return Base(
-      child: Column(
-        children: [
-          const SizedBox(height: 35),
-          // Spacer(flex: 55,),
-          // Container(
-          //   width: 100,
-          //   height: 100,
-          //   decoration: BoxDecoration(
-          //     color: Color.fromARGB(200, 217, 217, 217),
-          //     borderRadius: BorderRadius.circular(36),
-          //   ),
-          // ),
-          Image.asset("assets/animations/Money.gif"),
-          const SizedBox(height: 20),
-          Text(
-            AuthFa.OTP_TITLE,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 5),
-          Text(
-            AuthFa.OTP_DESCRIPTION,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(fontSize: 15),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 35),
-          _buildOtpTextField(context),
-          const SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "31:00",
-                style: Theme.of(
-                  context,
-                ).textTheme.bodySmall?.copyWith(fontSize: 12),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 35),
+                  // Spacer(flex: 55,),
+                  // Container(
+                  //   width: 100,
+                  //   height: 100,
+                  //   decoration: BoxDecoration(
+                  //     color: Color.fromARGB(200, 217, 217, 217),
+                  //     borderRadius: BorderRadius.circular(36),
+                  //   ),
+                  // ),
+                  Image.asset("assets/animations/Money.gif"),
+                  const SizedBox(height: 20),
+                  Text(
+                    AuthFa.OTP_TITLE,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      // fontWeight: FontWeight.w600,
+                      fontFamily: 'Peyda',
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    AuthFa.OTP_DESCRIPTION,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.copyWith(fontSize: 15),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 35),
+                  _buildOtpTextField(context),
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "31:00",
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontSize: 12,
+                          color: const Color(0xFF2F9F96),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        AuthFa.OTP_EXPIRED_TIME,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodySmall?.copyWith(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 35),
+                  _buildOtpContinueButton(context),
+                ],
               ),
-              const SizedBox(width: 12),
-              Text(
-                AuthFa.OTP_EXPIRED_TIME,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodySmall?.copyWith(fontSize: 12),
-              ),
-            ],
-          ),
-          const SizedBox(height: 35),
-          _buildOtpContinueButton(context),
-        ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -110,7 +123,10 @@ class _OtpPageState extends State<OtpPage> {
           width: 45,
           height: 60,
           decoration: BoxDecoration(
-            border: Border.all(color: CupertinoColors.systemGrey4, width: 1.5),
+            border: _isFocused
+                ? Border.all(color: CupertinoColors.systemBlue, width: 1.5)
+                : Border.all(color: CupertinoColors.systemGrey4, width: 1.5),
+            // border: Border.all(color: CupertinoColors.systemGrey4, width: 1.5),
             borderRadius: BorderRadius.circular(15),
           ),
           child: Center(
@@ -155,19 +171,37 @@ class _OtpPageState extends State<OtpPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         spacing: 0,
         children: [
-          SizedBox(
+          Container(
             width: double.infinity,
             height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              boxShadow: [
+                _isOtpComplete
+                    ? BoxShadow(
+                        color: const Color(0xFF74CEC4).withValues(alpha: 0.30),
+                        blurRadius: 20,
+                        spreadRadius: 2,
+                        offset: const Offset(0, 6),
+                      )
+                    : BoxShadow(
+                        color: const Color(0xFF74CEC4).withValues(alpha: 0.0),
+                        blurRadius: 0,
+                        spreadRadius: 0,
+                        offset: const Offset(0, 0),
+                      ),
+              ],
+            ),
             child: CupertinoButton(
               padding: EdgeInsets.zero,
               borderRadius: BorderRadius.circular(25),
               color: _isOtpComplete
-                  ? const Color(0xFF0091FF)
+                  ? const Color(0xFF2F9F96)
                   : CupertinoColors.systemGrey5,
               disabledColor: CupertinoColors.systemGrey5,
               onPressed: _isOtpComplete ? _handleContinue : null,
               child: Text(
-                CommonFa.continueText,
+                CommonFa.CONTINUE_TEXT,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontSize: 18,
                   color: _isOtpComplete
@@ -180,10 +214,11 @@ class _OtpPageState extends State<OtpPage> {
           CupertinoButton(
             padding: EdgeInsets.only(bottom: 6),
             child: Text(
-              AuthFa.OTP_CANCEL,
-              style: Theme.of(
-                context,
-              ).textTheme.bodySmall?.copyWith(fontSize: 12),
+              CommonFa.RETURN,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                fontSize: 12,
+                color: const Color(0xFF687579),
+              ),
             ),
             onPressed: () => {Navigator.pop(context)},
           ),
