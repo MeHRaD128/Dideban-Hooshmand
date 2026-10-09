@@ -30,6 +30,9 @@ jobs:
       
       - name: Build Debug APK (قابل نصب روی همه گوشی‌ها)
         run: flutter build apk --debug
+
+      - name: Build Release APK (قابل نصب روی گوشی‌های اندروید)
+        run: flutter build apk --release
       
       - name: Upload APK artifacts
         uses: actions/upload-artifact@v4
