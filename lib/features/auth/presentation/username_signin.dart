@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mr_market/app/localization/fa/auth_fa.dart';
 import 'package:mr_market/app/localization/fa/common.dart';
 import 'package:mr_market/core/widgets/responsive/responsive_container.dart';
@@ -60,7 +61,8 @@ class _UsernameSigninState extends State<UsernameSignin> {
               constraints: BoxConstraints(minHeight: constraints.minHeight),
               child: Column(
                 children: [
-                  Image.asset("assets/animations/Money.gif"),
+                  // Image.asset("assets/icons/Money.png"),
+                  SvgPicture.asset("assets/icons/diagram-bar.svg", width: 90),
                   const SizedBox(height: 20),
                   Text(
                     AuthFa.USERNAME_SIGNIN_TITLE,
@@ -75,7 +77,7 @@ class _UsernameSigninState extends State<UsernameSignin> {
                     AuthFa.USERNAME_SIGNIN_DESCRIPTION,
                     style: Theme.of(
                       context,
-                    ).textTheme.bodyMedium?.copyWith(fontSize: 15),
+                    ).textTheme.bodyMedium?.copyWith(fontSize: 16),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 35),
@@ -83,7 +85,7 @@ class _UsernameSigninState extends State<UsernameSignin> {
                   ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 300),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
                           AuthFa.USERNAME_SIGNIN_PHONE_NUMBER_TEXT_FIELD_LABEL,
@@ -101,7 +103,7 @@ class _UsernameSigninState extends State<UsernameSignin> {
                               color: CupertinoColors.systemGrey4,
                             ),
                           ),
-                          maxLength: 11,
+                          maxLength: 20,
                           onChanged: (value) {
                             setState(() {});
                           },
@@ -114,7 +116,7 @@ class _UsernameSigninState extends State<UsernameSignin> {
                   ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 300),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
                           AuthFa.USERNAME_SIGNIN_SENT_CODE_TEXT_FIELD_LABEL,
@@ -131,7 +133,7 @@ class _UsernameSigninState extends State<UsernameSignin> {
                               color: CupertinoColors.systemGrey4,
                             ),
                           ),
-                          maxLength: 6,
+                          maxLength: 26,
                           onChanged: (value) {
                             setState(() {});
                           },
@@ -205,7 +207,7 @@ class _UsernameSigninState extends State<UsernameSignin> {
             child: Text(
               AuthFa.FORGOT_PASSWORD,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                fontSize: 12,
+                fontSize: 15,
                 color: const Color(0xFF687579).withValues(alpha: 1),
               ),
             ),
@@ -221,7 +223,7 @@ class _UsernameSigninState extends State<UsernameSignin> {
             child: Text(
               CommonFa.RETURN,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                fontSize: 12,
+                fontSize: 15,
                 color: const Color(0xFF687579),
               ),
             ),

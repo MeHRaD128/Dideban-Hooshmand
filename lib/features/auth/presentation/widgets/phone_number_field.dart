@@ -65,7 +65,7 @@ class _PhoneNumberFieldState extends State<PhoneNumberField> {
           borderRadius: BorderRadius.circular(28),
           border: Border.all(
             color: _isFocused
-                ? const Color(0xFF74CEC4)
+                ? const Color(0xFF05ba83)
                 : CupertinoColors.systemGrey5,
             width: _isFocused ? 1.5 : 1,
           ),
@@ -96,7 +96,8 @@ class _PhoneNumberFieldState extends State<PhoneNumberField> {
                   signed: true,
                   decimal: true,
                 ),
-                placeholder: '(${_selectedCountry.example}) 000-0000',
+                maxLength: 11,
+                placeholder: '0900-000-0000',
                 placeholderStyle: const TextStyle(
                   color: CupertinoColors.systemGrey3,
                   fontSize: 16,

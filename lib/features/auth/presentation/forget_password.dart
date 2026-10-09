@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mr_market/app/localization/fa/auth_fa.dart';
 import 'package:mr_market/app/localization/fa/common.dart';
 import 'package:mr_market/core/widgets/responsive/responsive_container.dart';
@@ -59,7 +60,11 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
               constraints: BoxConstraints(minHeight: constraints.minHeight),
               child: Column(
                 children: [
-                  Image.asset("assets/animations/Money.gif"),
+                  // Image.asset("assets/icons/Money.png"),
+                  SvgPicture.asset(
+                    "assets/icons/report-pie-chart.svg",
+                    width: 90,
+                  ),
                   const SizedBox(height: 20),
                   Text(
                     AuthFa.FORGET_TITLE,
@@ -74,7 +79,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                     AuthFa.FORGET_DESCRIPTION,
                     style: Theme.of(
                       context,
-                    ).textTheme.bodyMedium?.copyWith(fontSize: 15),
+                    ).textTheme.bodyMedium?.copyWith(fontSize: 16),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 35),
@@ -82,7 +87,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                   ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 300),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
                           AuthFa.FORGOT_PHONE_NUMBER_TEXT_FIELD_LABEL,
@@ -113,7 +118,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                   ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 300),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
                           AuthFa.FORGOT_SENT_CODE_TEXT_FIELD_LABEL,
@@ -204,7 +209,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
             child: Text(
               CommonFa.RETURN,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                fontSize: 12,
+                fontSize: 15,
                 color: const Color(0xFF687579),
               ),
             ),

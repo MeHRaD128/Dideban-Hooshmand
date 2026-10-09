@@ -1,5 +1,6 @@
 class CommonFa {
-  static const appName = 'اپلیکیشن من';
+  static const APP_NAME = 'دیده بان هوشمند';
+  static const VERSION = "نسخه 1.0.0";
 
   static const yes = 'بله';
   static const no = 'خیر';

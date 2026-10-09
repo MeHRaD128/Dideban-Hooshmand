@@ -10,7 +10,7 @@ class LightTheme {
       textTheme: const TextTheme(
         bodyLarge: TextStyle(fontSize: 40, fontFamily: 'Peyda'),
         bodyMedium: TextStyle(fontSize: 20, fontFamily: 'Peyda'),
-        bodySmall: TextStyle(fontSize: 10, fontFamily: 'Peyda'),
+        bodySmall: TextStyle(fontSize: 12, fontFamily: 'Peyda'),
       ),
     );
   }

@@ -44,4 +44,6 @@ class CommonEn {
   static const details = 'Details';
   static const more = 'More';
   static const less = 'Less';
+
+  static const VERSION = "version 1.0.0";
 }

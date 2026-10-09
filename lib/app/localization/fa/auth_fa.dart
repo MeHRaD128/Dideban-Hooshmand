@@ -9,6 +9,16 @@ class AuthFa {
   static const FORGOT_PASSWORD = 'رمز عبور خود را فراموش کرده‌اید؟';
   static const LOGIN_WITH_USERNAME = "ورود با نام کاربری";
 
+  // SignUp page
+  static const SIGNUP_TITLE = 'تکمیل اطلاعات کاربری';
+  static const SIGNUP_DESCRIPTION =
+      'لطفا برای ادامه فرایند، اطلاعات کاربری خود را وارد کنید';
+  static const SIGNUP_FIRSTNAME = 'نام';
+  static const SIGNUP_LASTNAME = 'نام خانوادگی';
+  static const SIGNUP_PROVINCE = 'استان';
+  static const SIGNUP_PASSWORD = 'رمز عبور';
+  static const SIGNUP_SELECT_PROVINCE = 'انتخاب استان';
+
   // OTP page
   static const OTP_TITLE = 'تأیید کد یکبار مصرف';
   static const OTP_DESCRIPTION =

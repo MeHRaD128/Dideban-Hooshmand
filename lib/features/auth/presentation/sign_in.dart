@@ -1,3 +1,8 @@
+import 'package:flutter_svg/svg.dart';
+import 'package:http/http.dart' as http;
+import 'package:mr_market/features/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:mr_market/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:mr_market/features/auth/domain/usecases/send_otp.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,31 +35,57 @@ class _SignInPageState extends State<SignInPage> {
   );
 
   bool _rememberMe = false;
-
+  late final SendOtp _sendOtp;
   final TextEditingController _phoneController = TextEditingController();
 
   bool get _isPhoneValid {
     return _phoneController.text.trim().isNotEmpty;
   }
 
-  void _handleContinue() {
+  Future<void> _handleContinue() async {
     if (!_isPhoneValid) return;
 
     final phone = _phoneController.text.trim();
 
-    final fullPhoneNumber = '+${_selectedCountry.phoneCode}$phone';
+    final mobileNumber = phone.startsWith('0') ? phone : '0$phone';
 
-    print('ادامه: $fullPhoneNumber');
+    print('Sending: $mobileNumber');
 
-    Navigator.push(
-      context,
-      CupertinoPageRoute(builder: (context) => OtpPage()),
-    );
+    try {
+      await _sendOtp(mobileNumber);
+
+      if (!mounted) return;
+
+      Navigator.push(
+        context,
+        CupertinoPageRoute(
+          builder: (context) => OtpPage(mobileNumber: mobileNumber),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('ارسال کد با خطا مواجه شد')));
+    }
   }
 
   @override
   void initState() {
     super.initState();
+    _phoneController.addListener(() {
+      setState(() {});
+    });
+
+    final client = http.Client();
+
+    final remoteDataSource = AuthRemoteDataSource(client: client);
+
+    final repository = AuthRepositoryImpl(remoteDataSource: remoteDataSource);
+
+    _sendOtp = SendOtp(repository);
+
     _phoneController.addListener(() {
       setState(() {});
     });
@@ -81,7 +112,8 @@ class _SignInPageState extends State<SignInPage> {
                   //     borderRadius: BorderRadius.circular(36),
                   //   ),
                   // ),
-                  Image.asset("assets/animations/Money.gif"),
+                  // Image.asset("assets/icons/Money.png"),
+                  SvgPicture.asset("assets/icons/login.svg"),
                   const SizedBox(height: 20),
                   Text(
                     AuthFa.LOGIN_TITLE,
@@ -96,7 +128,7 @@ class _SignInPageState extends State<SignInPage> {
                     AuthFa.LOGIN_DESCRIPTION,
                     style: Theme.of(
                       context,
-                    ).textTheme.bodyMedium?.copyWith(fontSize: 15),
+                    ).textTheme.bodyMedium?.copyWith(fontSize: 16),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 35),
@@ -104,7 +136,7 @@ class _SignInPageState extends State<SignInPage> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
                             AuthFa.PHONE_NUMBER_FIELD_LABEL,
@@ -177,7 +209,7 @@ class _SignInPageState extends State<SignInPage> {
                               _isPhoneValid
                                   ? BoxShadow(
                                       color: const Color(
-                                        0xFF74CEC4,
+                                        0xFF05ba83,
                                       ).withValues(alpha: 0.30),
                                       blurRadius: 20,
                                       spreadRadius: 2,
@@ -197,7 +229,7 @@ class _SignInPageState extends State<SignInPage> {
                             padding: EdgeInsets.zero,
                             borderRadius: BorderRadius.circular(25),
                             color: _isPhoneValid
-                                ? const Color(0xFF2F9F96)
+                                ? const Color(0xFF01B578)
                                 : CupertinoColors.systemGrey5,
                             disabledColor: CupertinoColors.systemGrey5,
                             onPressed: _isPhoneValid ? _handleContinue : null,
@@ -220,7 +252,7 @@ class _SignInPageState extends State<SignInPage> {
                             AuthFa.LOGIN_WITH_USERNAME,
                             style: Theme.of(context).textTheme.bodySmall
                                 ?.copyWith(
-                                  fontSize: 12,
+                                  fontSize: 15,
                                   color: const Color(
                                     0xFF687579,
                                   ).withValues(alpha: 1),
