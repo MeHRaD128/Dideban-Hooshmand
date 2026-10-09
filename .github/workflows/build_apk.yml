@@ -1,52 +1,45 @@
 name: Build Flutter APK
 
 on:
-push:
-branches: [ main, master ]
-workflow_dispatch:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
 
 jobs:
-build:
-name: Build Debug and Release APKs
-runs-on: ubuntu-latest
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.x'
+      
+      - name: Install dependencies
+        run: flutter pub get
+      
+      - name: Build Debug APK (قابل نصب روی همه گوشی‌ها)
+        run: flutter build apk --debug
 
-
-steps:
-  - name: Checkout repository
-    uses: actions/checkout@v4
-
-  - name: Setup Java
-    uses: actions/setup-java@v4
-    with:
-      distribution: 'zulu'
-      java-version: '17'
-
-  - name: Setup Flutter
-    uses: subosito/flutter-action@v2
-    with:
-      channel: 'stable'
-      flutter-version: '3.x'
-
-  - name: Install dependencies
-    run: flutter pub get
-
-  - name: Build Debug APK
-    run: flutter build apk --debug
-
-  - name: Build Release APK
-    run: flutter build apk --release
-
-  - name: Verify APK files
-    run: |
-      ls -lh build/app/outputs/flutter-apk/app-debug.apk
-      ls -lh build/app/outputs/flutter-apk/app-release.apk
-
-  - name: Upload Debug and Release APKs
-    uses: actions/upload-artifact@v4
-    with:
-      name: all-apks
-      path: |
-        build/app/outputs/flutter-apk/app-debug.apk
-        build/app/outputs/flutter-apk/app-release.apk
-      if-no-files-found: error
-      retention-days: 30
+      - name: Build Release APK (قابل نصب روی گوشی‌های اندروید)
+        run: flutter build apk --release
+      
+      - name: Upload APK artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: all-apks
+          path: | 
+            build/app/outputs/flutter-apk/app-debug.apk
+            build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+          retention-days: 30
